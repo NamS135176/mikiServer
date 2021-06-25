@@ -64,6 +64,10 @@ let PetSchema = new Schema({
     comments:{
         type:Array,
         default:[]
+    },
+    followed:{
+        type:Array,
+        default:[]
     }
     ,
     created_date: {

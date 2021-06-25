@@ -12,13 +12,13 @@ let mongoose = require('mongoose')
 let options = {
   db:{native_parser: true},
   server: {poolSize:5},
-  user:'namtnt',
+  user:'namnt',
   pass:'namnt'
 }
 mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:27017/mikiMongoDB',options).then(
   () => {
-    console.log("connect to miki scuccess");
+    console.log("connect to miki succcess");
   },
   err => {
     console.log("Failed to connect "+ err);

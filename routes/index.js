@@ -1,15 +1,14 @@
 var express = require('express');
 var router = express.Router();
 let Pet = require('../model/pet')
-let Food = require('../model/FoodModel')
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-
-
 router.post('/postpet',function(req, res, next){
+  const {accountName, displayName, birthday, sex, typePet} = req.body
   const newClass = new Pet({
     accountName: req.body.accountName,
     displayName: req.body.displayName
@@ -32,7 +31,6 @@ router.post('/postpet',function(req, res, next){
             ,
             data: {
               name: req.body.accountName,
-              foodDescription: req.body.displayName,
               message:"insert new pet success"
             }
           })
@@ -48,31 +46,27 @@ router.post('/postpet',function(req, res, next){
     }
   })
 })
-router.post('/insertfood', (req, res, next) => {
-  
-  const newFood = new Food({
-    name: req.body.name,
-    foodDescription: req.body.foodDescription
-  })
 
-  newFood.save((err) => {
-    if (err) {
+router.get('/getPet/:accountName',(req, res, next) => {
+  Pet.find({"accountName":req.params.accountName},(error,user) => {
+    if(error){
       res.json({
         result: "failed",
-        data: {},
-        message:`error is: ${err}`
+        data:{},
+        message:`email exist`+ error
       })
     }
-    else {
+    else{
       res.json({
-        result: "ok",
+        result: "ok"
+        ,
         data: {
-          name: req.body.name,
-          foodDescription: req.body.foodDescription,
-          message:"insert new food success"
+          user: user,
+          message:"insert new pet success"
         }
       })
     }
   })
-});
+})
+
 module.exports = router;
